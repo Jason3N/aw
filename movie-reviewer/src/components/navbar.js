@@ -3,7 +3,9 @@
 function NavBar(){
     return (
         <div>
-            hey
+            <div>
+                Welcome to AggieReview Movie-Reviewer!
+            </div>
         </div>
     );
 }
