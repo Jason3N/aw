@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container, Box, Typography, Grid, Button, TextField } from '@mui/material';
+import '../App.css'
 
 function MovieContainer() {
   const [data, setData] = useState([]);
-  const [reviews, setReviews] = useState({}); // Object to hold reviews for each movie.
+  const [reviews, setReviews] = useState({}); 
 
   const fetchData = () => {
     axios.get("http://localhost:5000/movie/")
@@ -22,36 +23,34 @@ function MovieContainer() {
 
   const handleSubmit = (e, movieID) => {
     e.preventDefault();
-    
-    // Assuming backend expects a single review in the object with key "review"
     axios.put(`http://localhost:5000/movie/addReview/${movieID}`, {
       review: reviews[movieID]
     })
     .then(response => {
-      console.log('Review Added: ', response.data);
-      setReviews({...reviews, [movieID]: ''}); // Clear the specific review input
-      fetchData(); // Refetch the data to get updated reviews
+      setReviews({...reviews, [movieID]: ''}); 
+      fetchData();
     })
     .catch(error => {
-      console.error('Error adding review: ', error);
+      console.error('ERROR: ', error);
     });
   }
 
   return (
     <div>
       <Container>
-        <Grid container spacing={3}>
+        <Grid container spacing={1}>
           {data.map((movie, index) => (
-            <Grid item md={4} key={index}> 
+            <Grid className = "movie-card" item md={6} key={index}> 
               <Box>
-                <Typography variant="h6">
+                <div className = "movie-title">
                   {movie.movieID}
-                </Typography>
+                </div>
                 {movie.reviews && movie.reviews.map((review, idx) => (
-                  <Typography key={idx}>
+                  <div className = 'review-card' key={idx}>
                     {review}
-                  </Typography>
+                  </div>
                 ))}
+                </Box>
                 <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={(e) => handleSubmit(e, movie.movieID)}>
                   <TextField
                     variant="outlined"
@@ -59,10 +58,9 @@ function MovieContainer() {
                     required
                     fullWidth
                     id={`review-${movie.movieID}`}
-                    label="Add Review"
+                    label="Add your own review!"
                     name="review"
-                    autoComplete="review"
-                    autoFocus
+                    className = "submission-card"
                     value={reviews[movie.movieID] || ''}
                     onChange={(e) => setReviews({...reviews, [movie.movieID]: e.target.value})}
                   />
@@ -73,10 +71,9 @@ function MovieContainer() {
                     color="primary"
                     sx={{ mt: 3, mb: 2 }}
                   >
-                    Submit
+                    Submit Review
                   </Button>
                 </Box>
-              </Box>
             </Grid>
           ))}
         </Grid>

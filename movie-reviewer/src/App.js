@@ -6,8 +6,12 @@ import Movie from './components/moviecontainer.js'
 function App() {
   return (
     <div className="App">
+      <div>
       <Navbar/>
+      </div>
+      <div style ={{marginTop: '50px'}}>
       <Movie/>
+      </div>
     </div>
   );
 }
