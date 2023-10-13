@@ -38,12 +38,12 @@ function MovieContainer() {
   return (
     <div>
       <Container>
-        <Grid container spacing={1}>
+        <Grid container spacing={12}>
           {data.map((movie, index) => (
             <Grid className = "movie-card" item md={6} key={index}> 
               <Box>
                 <div className = "movie-title">
-                  {movie.movieID}
+                  {movie.movieID}!  
                 </div>
                 {movie.reviews && movie.reviews.map((review, idx) => (
                   <div className = 'review-card' key={idx}>
